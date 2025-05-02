@@ -31,7 +31,7 @@ variable "additional_tags" {
 }
 
 variable "deployment_name" {
-  type = string
+  type        = string
   description = "Deployment name"
 }
 
@@ -41,12 +41,12 @@ variable "cluster_version" {
 }
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "VPC ID"
 }
 
 variable "subnet_ids" {
-  type = list(string)
+  type        = list(string)
   description = "List of subnet IDs"
 }
 
@@ -63,14 +63,14 @@ variable "create_cloudwatch_log_group" {
 }
 
 variable "ingress_nginx_external_lb_enabled" {
-  type = bool
+  type        = bool
   description = "Enable external load balancer for ingress nginx"
-  default = false
+  default     = false
 }
 variable "ingress_nginx_internal_lb_enabled" {
-  type = bool
+  type        = bool
   description = "Enable internal load balancer for ingress nginx"
-  default = true
+  default     = true
 }
 variable "ingress_nginx_lb_cert_arn" {
   description = "Attach ACM certificate to Load Balancer"
@@ -86,13 +86,13 @@ variable "ingress_tcp_udp_config_maps" {
 }
 
 variable "private_route53_zone_id" {
-  type = string
+  type        = string
   description = "Private Route53 zone ID"
-  default = null
+  default     = null
 }
 
 variable "public_route53_zone_id" {
-  type = string
+  type        = string
   description = "Public Route53 zone ID"
-  default = null
+  default     = null
 }

@@ -58,6 +58,6 @@ data "aws_ecrpublic_authorization_token" "token" {
 
 
 locals {
-  aws_partition       = data.aws_partition.this.partition
-  name                 = "eks-${var.deployment_name}-${var.environment}-${var.stack}"
+  aws_partition = data.aws_partition.this.partition
+  name          = "${var.deployment_name}-${var.environment}-${var.stack}"
 }
