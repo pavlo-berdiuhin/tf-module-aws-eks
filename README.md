@@ -63,7 +63,7 @@ This module creates an EKS cluster with Karpenter node controller.
 | <a name="input_cluster_identity_providers"></a> [cluster\_identity\_providers](#input\_cluster\_identity\_providers) | External Identity Providers, e.g Okta, AzureSSO, Google Auth | `map(any)` | `{}` | no |
 | <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | EKS cluster version | `string` | n/a | yes |
 | <a name="input_create_cloudwatch_log_group"></a> [create\_cloudwatch\_log\_group](#input\_create\_cloudwatch\_log\_group) | Create CloudWatch log group | `bool` | `false` | no |
-| <a name="input_deployment_name"></a> [deployment\_name](#input\_deployment\_name) | Deployment name | `string` | n/a | yes |
+| <a name="input_deployment_name"></a> [deployment\_name](#input\_deployment\_name) | Deployment name | `string` | `"eks"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment | `string` | n/a | yes |
 | <a name="input_ingress_nginx_external_lb_enabled"></a> [ingress\_nginx\_external\_lb\_enabled](#input\_ingress\_nginx\_external\_lb\_enabled) | Enable external load balancer for ingress nginx | `bool` | `false` | no |
 | <a name="input_ingress_nginx_internal_lb_enabled"></a> [ingress\_nginx\_internal\_lb\_enabled](#input\_ingress\_nginx\_internal\_lb\_enabled) | Enable internal load balancer for ingress nginx | `bool` | `true` | no |

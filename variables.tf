@@ -33,6 +33,7 @@ variable "additional_tags" {
 variable "deployment_name" {
   type        = string
   description = "Deployment name"
+  default     = "eks"
 }
 
 variable "cluster_version" {
