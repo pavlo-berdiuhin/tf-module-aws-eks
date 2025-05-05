@@ -21,7 +21,7 @@ resource "helm_release" "karpenter" {
   repository_username = data.aws_ecrpublic_authorization_token.token.user_name
   repository_password = data.aws_ecrpublic_authorization_token.token.password
   chart               = "karpenter"
-  version             = "1.1.1"
+  version             = "1.4.0"
   atomic              = true
 
   values = [
@@ -82,7 +82,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
           requirements:
             - key: kubernetes.io/arch
               operator: In
-              values: ["amd64"]
+              values: ["arm64"]
             - key: kubernetes.io/os
               operator: In
               values: ["linux"]
