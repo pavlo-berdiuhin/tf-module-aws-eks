@@ -78,19 +78,20 @@ module "eks_irsa" {
 }
 
 
-resource "kubectl_manifest" "gp3_ext4_sc" {
-  yaml_body = <<-YAML
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: gp3-ext4
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-provisioner: ebs.csi.aws.com
-allowVolumeExpansion: true
-volumeBindingMode: WaitForFirstConsumer
-parameters:
-  type: gp3
-  csi.storage.k8s.io/fstype: ext4
-YAML
+resource "kubernetes_storage_class" "gp3_ext4" {
+  metadata {
+    name = "gp3-ext4"
+    annotations = {
+      "storageclass.kubernetes.io/is-default-class" = "true"
+    }
+  }
+
+  storage_provisioner    = "ebs.csi.aws.com"
+  allow_volume_expansion = true
+  volume_binding_mode    = "WaitForFirstConsumer"
+
+  parameters = {
+    type                        = "gp3"
+    "csi.storage.k8s.io/fstype" = "ext4"
+  }
 }
