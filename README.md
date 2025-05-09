@@ -24,7 +24,6 @@ This module creates an EKS cluster with Karpenter node controller.
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.40 |
 | <a name="provider_aws.us-east-1"></a> [aws.us-east-1](#provider\_aws.us-east-1) | >= 5.40 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.7 |
-| <a name="provider_kubectl"></a> [kubectl](#provider\_kubectl) | n/a |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.27 |
 
 ## Modules
@@ -43,8 +42,8 @@ This module creates an EKS cluster with Karpenter node controller.
 | [aws_route53_record.public_ingress_nginx](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [helm_release.ingress_nginx](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.karpenter](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [kubectl_manifest.karpenter_node_class](https://registry.terraform.io/providers/hashicorp/kubectl/latest/docs/resources/manifest) | resource |
-| [kubectl_manifest.karpenter_node_pool](https://registry.terraform.io/providers/hashicorp/kubectl/latest/docs/resources/manifest) | resource |
+| [kubernetes_manifest.karpenter_node_class](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
+| [kubernetes_manifest.karpenter_node_pool](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
 | [kubernetes_storage_class.gp3_ext4](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/storage_class) | resource |
 | [aws_ecrpublic_authorization_token.token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecrpublic_authorization_token) | data source |
 | [aws_partition.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |

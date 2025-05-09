@@ -39,26 +39,40 @@ resource "helm_release" "karpenter" {
 }
 
 
-resource "kubectl_manifest" "karpenter_node_class" {
-  yaml_body = <<-YAML
-    apiVersion: karpenter.k8s.aws/v1
-    kind: EC2NodeClass
-    metadata:
-      name: default
-    spec:
-      amiSelectorTerms:
-      - alias: al2023@v20241024
-      role: ${module.karpenter.node_iam_role_name}
-      subnetSelectorTerms:
-        - tags:
-            karpenter.sh/discovery: ${module.eks.cluster_name}
-      securityGroupSelectorTerms:
-        - tags:
-            karpenter.sh/discovery: ${module.eks.cluster_name}
-      tags:
-        Name: ${var.stack}-eks-karpenter-node
-        karpenter.sh/discovery: ${module.eks.cluster_name}
-  YAML
+resource "kubernetes_manifest" "karpenter_node_class" {
+  manifest = {
+    apiVersion = "karpenter.k8s.aws/v1"
+    kind       = "EC2NodeClass"
+    metadata = {
+      name = "default"
+    }
+    spec = {
+      amiSelectorTerms = [
+        {
+          alias = "al2023@v20241024"
+        }
+      ]
+      role = module.karpenter.node_iam_role_name
+      subnetSelectorTerms = [
+        {
+          tags = {
+            "karpenter.sh/discovery" = module.eks.cluster_name
+          }
+        }
+      ]
+      securityGroupSelectorTerms = [
+        {
+          tags = {
+            "karpenter.sh/discovery" = module.eks.cluster_name
+          }
+        }
+      ]
+      tags = {
+        Name                     = "${var.stack}-eks-karpenter-node"
+        "karpenter.sh/discovery" = module.eks.cluster_name
+      }
+    }
+  }
 
   depends_on = [
     helm_release.karpenter
@@ -66,37 +80,51 @@ resource "kubectl_manifest" "karpenter_node_class" {
 }
 
 
-resource "kubectl_manifest" "karpenter_node_pool" {
-  yaml_body = <<-YAML
-    apiVersion: karpenter.sh/v1
-    kind: NodePool
-    metadata:
-      name: spot
-    spec:
-      template:
-        spec:
-          nodeClassRef:
-            group: karpenter.k8s.aws
-            kind: EC2NodeClass
-            name: default
-          requirements:
-            - key: kubernetes.io/arch
-              operator: In
-              values: ["arm64"]
-            - key: kubernetes.io/os
-              operator: In
-              values: ["linux"]
-            - key: karpenter.sh/capacity-type
-              operator: In
-              values: ["spot"]
-      limits:
-        cpu: 1000
-      disruption:
-        consolidationPolicy: WhenEmptyOrUnderutilized
-        consolidateAfter: 1m
-  YAML
+resource "kubernetes_manifest" "karpenter_node_pool" {
+  manifest = {
+    apiVersion = "karpenter.sh/v1"
+    kind       = "NodePool"
+    metadata = {
+      name = "spot"
+    }
+    spec = {
+      template = {
+        spec = {
+          nodeClassRef = {
+            group = "karpenter.k8s.aws"
+            kind  = "EC2NodeClass"
+            name  = "default"
+          }
+          requirements = [
+            {
+              key      = "kubernetes.io/arch"
+              operator = "In"
+              values   = ["arm64"]
+            },
+            {
+              key      = "kubernetes.io/os"
+              operator = "In"
+              values   = ["linux"]
+            },
+            {
+              key      = "karpenter.sh/capacity-type"
+              operator = "In"
+              values   = ["spot"]
+            }
+          ]
+        }
+      }
+      limits = {
+        cpu = 1000
+      }
+      disruption = {
+        consolidationPolicy = "WhenEmptyOrUnderutilized"
+        consolidateAfter    = "1m"
+      }
+    }
+  }
 
   depends_on = [
-    kubectl_manifest.karpenter_node_class
+    kubernetes_manifest.karpenter_node_class
   ]
 }
