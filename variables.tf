@@ -41,6 +41,12 @@ variable "cluster_version" {
   description = "EKS cluster version"
 }
 
+variable "cluster_endpoint_public_access" {
+  description = "EKS cluster public endpoint"
+  type        = bool
+  default     = false
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID"

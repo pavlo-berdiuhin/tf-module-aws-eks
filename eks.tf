@@ -4,7 +4,7 @@ module "eks" {
   cluster_name                    = local.name
   cluster_version                 = var.cluster_version
   cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access  = var.cluster_endpoint_public_access
   vpc_id                          = var.vpc_id
   subnet_ids                      = var.subnet_ids
   control_plane_subnet_ids        = var.subnet_ids
