@@ -32,6 +32,8 @@ module "eks" {
 
   cluster_identity_providers = var.cluster_identity_providers
 
+  cluster_security_group_additional_rules = var.cluster_security_group_additional_rules
+
   eks_managed_node_groups = {
     (local.name) = {
       ami_type               = "AL2_ARM_64"
