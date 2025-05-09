@@ -32,23 +32,17 @@ module "eks" {
 
   cluster_identity_providers = var.cluster_identity_providers
 
-  cluster_security_group_additional_rules = var.cluster_security_group_additional_rules
-
   eks_managed_node_groups = {
     (local.name) = {
-      ami_type               = "AL2_ARM_64"
+      ami_type               = "BOTTLEROCKET_ARM_64"
       instance_types         = ["m7g.medium"]
       create_security_group  = false
       min_size               = 1
       max_size               = 2
       desired_size           = 1
       vpc_security_group_ids = []
-      taints = {
-        addons = {
-          key    = "CriticalAddonsOnly"
-          value  = "true"
-          effect = "NO_SCHEDULE"
-        },
+      labels = {
+        "karpenter.sh/controller" = "true"
       }
     }
   }
