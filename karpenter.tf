@@ -56,7 +56,7 @@ resource "kubectl_manifest" "karpenter_node_class" {
         - tags:
             karpenter.sh/discovery: ${module.eks.cluster_name}
       tags:
-        Name: ${var.stack}-eks-karpenter-node
+        Name: ${local.name}-karpenter
         karpenter.sh/discovery: ${module.eks.cluster_name}
   YAML
 
