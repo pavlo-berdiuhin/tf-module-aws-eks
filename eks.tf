@@ -1,20 +1,22 @@
 module "eks" {
-  source                          = "terraform-aws-modules/eks/aws"
-  version                         = "~> 20"
-  cluster_name                    = local.name
-  cluster_version                 = var.cluster_version
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = var.cluster_endpoint_public_access
-  vpc_id                          = var.vpc_id
-  subnet_ids                      = var.subnet_ids
-  control_plane_subnet_ids        = var.subnet_ids
-  create_cloudwatch_log_group     = var.create_cloudwatch_log_group
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 20"
 
+  cluster_name                             = local.name
+  cluster_version                          = var.cluster_version
+  enable_irsa                              = true
+  vpc_id                                   = var.vpc_id
+  subnet_ids                               = var.subnet_ids
+  control_plane_subnet_ids                 = var.subnet_ids
+  create_cloudwatch_log_group              = var.create_cloudwatch_log_group
+  cluster_endpoint_public_access           = var.cluster_endpoint_public_access
+  cluster_endpoint_private_access          = true
   enable_cluster_creator_admin_permissions = true
 
   cluster_addons = {
     aws-ebs-csi-driver = {
-      most_recent = true
+      most_recent              = true
+      service_account_role_arn = module.eks_irsa.iam_role_arn
     }
     eks-pod-identity-agent = {
       most_recent = true
@@ -53,6 +55,24 @@ module "eks" {
 
   node_security_group_tags = {
     "karpenter.sh/discovery" = local.name
+  }
+}
+
+
+module "eks_irsa" {
+  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version   = "~> 5.3"
+  role_name = local.name
+
+  attach_ebs_csi_policy = true
+
+  oidc_providers = {
+    (local.name) = {
+      provider_arn = module.eks.oidc_provider_arn
+      namespace_service_accounts = [
+        "kube-system:ebs-csi-controller-sa"
+      ]
+    }
   }
 }
 
