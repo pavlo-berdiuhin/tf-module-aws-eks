@@ -75,29 +75,6 @@ variable "create_cloudwatch_log_group" {
   default     = false
 }
 
-variable "ingress_nginx_external_lb_enabled" {
-  type        = bool
-  description = "Enable external load balancer for ingress nginx"
-  default     = false
-}
-variable "ingress_nginx_internal_lb_enabled" {
-  type        = bool
-  description = "Enable internal load balancer for ingress nginx"
-  default     = true
-}
-variable "ingress_nginx_lb_cert_arn" {
-  description = "Attach ACM certificate to Load Balancer"
-  type        = string
-}
-variable "ingress_tcp_udp_config_maps" {
-  description = "TCP config map for ingress controller"
-  type        = map(map(string))
-  default = {
-    tcp = {}
-    upd = {}
-  }
-}
-
 variable "on_demand_node_group_conf" {
   description = "On-demand node group configuration"
   type = object({

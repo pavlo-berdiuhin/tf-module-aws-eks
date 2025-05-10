@@ -38,7 +38,6 @@ This module creates an EKS cluster with Karpenter node controller.
 
 | Name | Type |
 |------|------|
-| [helm_release.ingress_nginx](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.karpenter](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [kubectl_manifest.gp3_ext4_sc](https://registry.terraform.io/providers/alekc/kubectl/latest/docs/resources/manifest) | resource |
 | [kubectl_manifest.karpenter_node_class](https://registry.terraform.io/providers/alekc/kubectl/latest/docs/resources/manifest) | resource |
@@ -59,10 +58,6 @@ This module creates an EKS cluster with Karpenter node controller.
 | <a name="input_create_cloudwatch_log_group"></a> [create\_cloudwatch\_log\_group](#input\_create\_cloudwatch\_log\_group) | Create CloudWatch log group | `bool` | `false` | no |
 | <a name="input_deployment_name"></a> [deployment\_name](#input\_deployment\_name) | Deployment name | `string` | `"eks"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment | `string` | n/a | yes |
-| <a name="input_ingress_nginx_external_lb_enabled"></a> [ingress\_nginx\_external\_lb\_enabled](#input\_ingress\_nginx\_external\_lb\_enabled) | Enable external load balancer for ingress nginx | `bool` | `false` | no |
-| <a name="input_ingress_nginx_internal_lb_enabled"></a> [ingress\_nginx\_internal\_lb\_enabled](#input\_ingress\_nginx\_internal\_lb\_enabled) | Enable internal load balancer for ingress nginx | `bool` | `true` | no |
-| <a name="input_ingress_nginx_lb_cert_arn"></a> [ingress\_nginx\_lb\_cert\_arn](#input\_ingress\_nginx\_lb\_cert\_arn) | Attach ACM certificate to Load Balancer | `string` | n/a | yes |
-| <a name="input_ingress_tcp_udp_config_maps"></a> [ingress\_tcp\_udp\_config\_maps](#input\_ingress\_tcp\_udp\_config\_maps) | TCP config map for ingress controller | `map(map(string))` | <pre>{<br/>  "tcp": {},<br/>  "upd": {}<br/>}</pre> | no |
 | <a name="input_on_demand_node_group_conf"></a> [on\_demand\_node\_group\_conf](#input\_on\_demand\_node\_group\_conf) | On-demand node group configuration | <pre>object({<br/>    ami_type       = optional(string, "BOTTLEROCKET_ARM_64")<br/>    instance_types = optional(list(string), ["m7g.medium"])<br/>    min_size       = optional(number, 2)<br/>    max_size       = optional(number, 2)<br/>    desired_size   = optional(number, 2)<br/>  })</pre> | `{}` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | Owner | `string` | n/a | yes |
 | <a name="input_stack"></a> [stack](#input\_stack) | Installation stack | `string` | n/a | yes |
