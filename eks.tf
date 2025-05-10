@@ -28,17 +28,22 @@ module "eks" {
     kube-proxy = {
       most_recent = true
     }
+    external-dns = {
+      most_recent = true
+    }
   }
 
   cluster_identity_providers = var.cluster_identity_providers
 
+  cluster_security_group_additional_rules = var.cluster_security_group_additional_rules
+
   eks_managed_node_groups = {
     (local.name) = {
-      ami_type               = "BOTTLEROCKET_ARM_64"
-      instance_types         = ["m7g.medium"]
-      min_size               = 1
-      max_size               = 2
-      desired_size           = 1
+      ami_type               = var.on_demand_node_group_conf.ami_type
+      instance_types         = var.on_demand_node_group_conf.instance_types
+      min_size               = var.on_demand_node_group_conf.min_size
+      max_size               = var.on_demand_node_group_conf.max_size
+      desired_size           = var.on_demand_node_group_conf.desired_size
       vpc_security_group_ids = []
       labels = {
         "karpenter.sh/controller" = "true"

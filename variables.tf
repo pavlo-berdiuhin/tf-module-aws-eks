@@ -98,14 +98,14 @@ variable "ingress_tcp_udp_config_maps" {
   }
 }
 
-variable "private_route53_zone_id" {
-  type        = string
-  description = "Private Route53 zone ID"
-  default     = null
-}
-
-variable "public_route53_zone_id" {
-  type        = string
-  description = "Public Route53 zone ID"
-  default     = null
+variable "on_demand_node_group_conf" {
+  description = "On-demand node group configuration"
+  type = object({
+    ami_type       = optional(string, "BOTTLEROCKET_ARM_64")
+    instance_types = optional(list(string), ["m7g.medium"])
+    min_size       = optional(number, 2)
+    max_size       = optional(number, 2)
+    desired_size   = optional(number, 2)
+  })
+  default = {}
 }

@@ -25,7 +25,6 @@ This module creates an EKS cluster with Karpenter node controller.
 | <a name="provider_aws.us-east-1"></a> [aws.us-east-1](#provider\_aws.us-east-1) | >= 5.40 |
 | <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.7 |
 | <a name="provider_kubectl"></a> [kubectl](#provider\_kubectl) | >= 2.0 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | n/a |
 
 ## Modules
 
@@ -38,8 +37,6 @@ This module creates an EKS cluster with Karpenter node controller.
 
 | Name | Type |
 |------|------|
-| [aws_route53_record.private_ingress_nginx](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
-| [aws_route53_record.public_ingress_nginx](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [helm_release.ingress_nginx](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.karpenter](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [kubectl_manifest.gp3_ext4_sc](https://registry.terraform.io/providers/alekc/kubectl/latest/docs/resources/manifest) | resource |
@@ -47,10 +44,6 @@ This module creates an EKS cluster with Karpenter node controller.
 | [kubectl_manifest.karpenter_node_pool](https://registry.terraform.io/providers/alekc/kubectl/latest/docs/resources/manifest) | resource |
 | [aws_ecrpublic_authorization_token.token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecrpublic_authorization_token) | data source |
 | [aws_partition.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
-| [aws_route53_zone.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
-| [aws_route53_zone.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
-| [kubernetes_service.ingress_controller_external](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/service) | data source |
-| [kubernetes_service.ingress_controller_internal](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/service) | data source |
 
 ## Inputs
 
@@ -69,9 +62,8 @@ This module creates an EKS cluster with Karpenter node controller.
 | <a name="input_ingress_nginx_internal_lb_enabled"></a> [ingress\_nginx\_internal\_lb\_enabled](#input\_ingress\_nginx\_internal\_lb\_enabled) | Enable internal load balancer for ingress nginx | `bool` | `true` | no |
 | <a name="input_ingress_nginx_lb_cert_arn"></a> [ingress\_nginx\_lb\_cert\_arn](#input\_ingress\_nginx\_lb\_cert\_arn) | Attach ACM certificate to Load Balancer | `string` | n/a | yes |
 | <a name="input_ingress_tcp_udp_config_maps"></a> [ingress\_tcp\_udp\_config\_maps](#input\_ingress\_tcp\_udp\_config\_maps) | TCP config map for ingress controller | `map(map(string))` | <pre>{<br/>  "tcp": {},<br/>  "upd": {}<br/>}</pre> | no |
+| <a name="input_on_demand_node_group_conf"></a> [on\_demand\_node\_group\_conf](#input\_on\_demand\_node\_group\_conf) | On-demand node group configuration | <pre>object({<br/>    ami_type       = optional(string, "BOTTLEROCKET_ARM_64")<br/>    instance_types = optional(list(string), ["m7g.medium"])<br/>    min_size       = optional(number, 2)<br/>    max_size       = optional(number, 2)<br/>    desired_size   = optional(number, 2)<br/>  })</pre> | `{}` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | Owner | `string` | n/a | yes |
-| <a name="input_private_route53_zone_id"></a> [private\_route53\_zone\_id](#input\_private\_route53\_zone\_id) | Private Route53 zone ID | `string` | `null` | no |
-| <a name="input_public_route53_zone_id"></a> [public\_route53\_zone\_id](#input\_public\_route53\_zone\_id) | Public Route53 zone ID | `string` | `null` | no |
 | <a name="input_stack"></a> [stack](#input\_stack) | Installation stack | `string` | n/a | yes |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnet IDs | `list(string)` | n/a | yes |
 | <a name="input_team"></a> [team](#input\_team) | Team name | `string` | `"devops"` | no |
