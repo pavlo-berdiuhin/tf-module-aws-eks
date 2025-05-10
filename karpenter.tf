@@ -47,7 +47,7 @@ resource "kubectl_manifest" "karpenter_node_class" {
       name: default
     spec:
       amiSelectorTerms:
-      - alias: al2023@v20241024
+        - alias: bottlerocket@latest
       role: ${module.karpenter.node_iam_role_name}
       subnetSelectorTerms:
         - tags:
