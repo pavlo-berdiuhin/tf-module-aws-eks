@@ -2,16 +2,18 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20"
 
-  cluster_name                             = local.name
-  cluster_version                          = var.cluster_version
-  enable_irsa                              = true
-  vpc_id                                   = var.vpc_id
-  subnet_ids                               = var.subnet_ids
-  control_plane_subnet_ids                 = var.subnet_ids
-  create_cloudwatch_log_group              = var.create_cloudwatch_log_group
-  cluster_endpoint_public_access           = var.cluster_endpoint_public_access
-  cluster_endpoint_private_access          = true
+  cluster_name                    = local.name
+  cluster_version                 = var.cluster_version
+  enable_irsa                     = true
+  vpc_id                          = var.vpc_id
+  subnet_ids                      = var.subnet_ids
+  control_plane_subnet_ids        = var.subnet_ids
+  create_cloudwatch_log_group     = var.create_cloudwatch_log_group
+  cluster_endpoint_public_access  = var.cluster_endpoint_public_access
+  cluster_endpoint_private_access = true
+
   enable_cluster_creator_admin_permissions = true
+  access_entries                           = var.access_entries
 
   cluster_addons = {
     aws-ebs-csi-driver = {
@@ -90,20 +92,6 @@ module "eks_irsa" {
       ]
     }
   }
-}
-
-
-module "eks_aws_auth" {
-  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version = "~> 20.0"
-
-  manage_aws_auth_configmap = true
-
-  aws_auth_roles = var.aws_auth_roles
-
-  aws_auth_users = []
-
-  aws_auth_accounts = []
 }
 
 

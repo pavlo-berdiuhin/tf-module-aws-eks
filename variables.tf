@@ -69,10 +69,10 @@ variable "cluster_identity_providers" {
   default     = {}
 }
 
-variable "aws_auth_roles" {
-  description = "List of role maps to add to the aws-auth configmap"
-  type        = list(any)
-  default     = []
+variable "access_entries" {
+  type        = any
+  default     = {}
+  description = "Map of access entries to add to the cluster, https://github.com/terraform-aws-modules/terraform-aws-eks?tab=readme-ov-file#cluster-access-entry"
 }
 
 variable "create_cloudwatch_log_group" {
