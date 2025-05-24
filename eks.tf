@@ -36,6 +36,25 @@ module "eks" {
 
   cluster_security_group_additional_rules = var.cluster_security_group_additional_rules
 
+  node_security_group_additional_rules = {
+    http = {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      type        = "ingress"
+      description = "Allow HTTP between nodes"
+      self        = true
+    }
+    https = {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      type        = "ingress"
+      description = "Allow HTTP between nodes"
+      self        = true
+    }
+  }
+
   eks_managed_node_groups = {
     (local.name) = {
       ami_type               = var.on_demand_node_group_conf.ami_type
