@@ -69,6 +69,12 @@ variable "cluster_identity_providers" {
   default     = {}
 }
 
+variable "aws_auth_roles" {
+  description = "List of role maps to add to the aws-auth configmap"
+  type        = list(any)
+  default     = []
+}
+
 variable "create_cloudwatch_log_group" {
   description = "Create CloudWatch log group"
   type        = bool
