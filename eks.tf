@@ -30,9 +30,6 @@ module "eks" {
     kube-proxy = {
       most_recent = true
     }
-    external-dns = {
-      most_recent = true
-    }
   }
 
   cluster_identity_providers = var.cluster_identity_providers
