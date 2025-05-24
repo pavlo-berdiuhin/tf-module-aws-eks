@@ -58,6 +58,7 @@ This module creates an EKS cluster with Karpenter node controller.
 | <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | EKS cluster version | `string` | n/a | yes |
 | <a name="input_create_cloudwatch_log_group"></a> [create\_cloudwatch\_log\_group](#input\_create\_cloudwatch\_log\_group) | Create CloudWatch log group | `bool` | `false` | no |
 | <a name="input_deployment_name"></a> [deployment\_name](#input\_deployment\_name) | Deployment name | `string` | `"eks"` | no |
+| <a name="input_enable_cluster_creator_admin_permissions"></a> [enable\_cluster\_creator\_admin\_permissions](#input\_enable\_cluster\_creator\_admin\_permissions) | Indicates whether or not to add the cluster creator (the identity used by Terraform) as an administrator via access entry | `bool` | `false` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment | `string` | n/a | yes |
 | <a name="input_on_demand_node_group_conf"></a> [on\_demand\_node\_group\_conf](#input\_on\_demand\_node\_group\_conf) | On-demand node group configuration | <pre>object({<br/>    ami_type       = optional(string, "BOTTLEROCKET_ARM_64")<br/>    instance_types = optional(list(string), ["m7g.medium"])<br/>    min_size       = optional(number, 2)<br/>    max_size       = optional(number, 2)<br/>    desired_size   = optional(number, 2)<br/>  })</pre> | `{}` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | Owner | `string` | n/a | yes |
