@@ -89,6 +89,9 @@ resource "kubectl_manifest" "karpenter_node_pool" {
             - key: karpenter.sh/capacity-type
               operator: In
               values: ["spot"]
+            - key: karpenter.k8s.aws/instance-category
+              operator: NotIn
+              values: ["t"]
       limits:
         cpu: 1000
       disruption:
