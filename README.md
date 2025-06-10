@@ -50,8 +50,8 @@ This module creates an EKS cluster with Karpenter node controller.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_access_entries"></a> [access\_entries](#input\_access\_entries) | Map of access entries to add to the cluster, https://github.com/terraform-aws-modules/terraform-aws-eks?tab=readme-ov-file#cluster-access-entry | `any` | `{}` | no |
-| <a name="input_additional_cluster_addons"></a> [additional\_cluster\_addons](#input\_additional\_cluster\_addons) | Map of additional cluster addon configurations to enable for the cluster. Addon name can be the map keys or set with `name` | `any` | `{}` | no |
 | <a name="input_additional_tags"></a> [additional\_tags](#input\_additional\_tags) | Additional tags for all resources | `map(string)` | `{}` | no |
+| <a name="input_aws_mountpoint_s3"></a> [aws\_mountpoint\_s3](#input\_aws\_mountpoint\_s3) | Configuration for aws-mountpoint-s3-csi-driver addon | <pre>object({<br/>    mountpoint_s3_csi_bucket_arns = optional(list(string), [])<br/>    mountpoint_s3_csi_path_arns   = optional(list(string), [])<br/>  })</pre> | `null` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | n/a | yes |
 | <a name="input_cluster_endpoint_public_access"></a> [cluster\_endpoint\_public\_access](#input\_cluster\_endpoint\_public\_access) | EKS cluster public endpoint | `bool` | `false` | no |
 | <a name="input_cluster_identity_providers"></a> [cluster\_identity\_providers](#input\_cluster\_identity\_providers) | External Identity Providers, e.g Okta, AzureSSO, Google Auth | `map(any)` | `{}` | no |

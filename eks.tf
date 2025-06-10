@@ -1,22 +1,13 @@
 locals {
-  cluster_addons = merge({
-    aws-ebs-csi-driver = {
-      most_recent              = true
-      service_account_role_arn = module.eks_irsa.iam_role_arn
-    }
-    eks-pod-identity-agent = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-  }, var.additional_cluster_addons)
+  additional_cluster_addons = merge(
+    {},
+    var.aws_mountpoint_s3 != null ? {
+      aws-mountpoint-s3-csi-driver = {
+        most_recent              = true
+        service_account_role_arn = module.eks_irsa.iam_role_arn
+      }
+    } : {}
+  )
 }
 
 module "eks" {
@@ -36,7 +27,24 @@ module "eks" {
   enable_cluster_creator_admin_permissions = var.enable_cluster_creator_admin_permissions
   access_entries                           = var.access_entries
 
-  cluster_addons = local.cluster_addons
+  cluster_addons = merge({
+    aws-ebs-csi-driver = {
+      most_recent              = true
+      service_account_role_arn = module.eks_irsa.iam_role_arn
+    }
+    eks-pod-identity-agent = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+    }
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+  }, local.additional_cluster_addons)
 
   cluster_identity_providers = var.cluster_identity_providers
 
@@ -87,6 +95,10 @@ module "eks_irsa" {
   role_name = local.name
 
   attach_ebs_csi_policy = true
+
+  attach_mountpoint_s3_csi_policy = var.aws_mountpoint_s3 != null
+  mountpoint_s3_csi_bucket_arns   = var.aws_mountpoint_s3.mountpoint_s3_csi_bucket_arns
+  mountpoint_s3_csi_path_arns     = var.aws_mountpoint_s3.mountpoint_s3_csi_path_arns
 
   oidc_providers = {
     (local.name) = {

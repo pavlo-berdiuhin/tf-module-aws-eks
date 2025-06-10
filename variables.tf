@@ -99,8 +99,11 @@ variable "on_demand_node_group_conf" {
   default = {}
 }
 
-variable "additional_cluster_addons" {
-  description = "Map of additional cluster addon configurations to enable for the cluster. Addon name can be the map keys or set with `name`"
-  type        = any
-  default     = {}
+variable "aws_mountpoint_s3" {
+  description = "Configuration for aws-mountpoint-s3-csi-driver addon"
+  type = object({
+    mountpoint_s3_csi_bucket_arns = optional(list(string), [])
+    mountpoint_s3_csi_path_arns   = optional(list(string), [])
+  })
+  default = null
 }
