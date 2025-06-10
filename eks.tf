@@ -104,7 +104,8 @@ module "eks_irsa" {
     (local.name) = {
       provider_arn = module.eks.oidc_provider_arn
       namespace_service_accounts = [
-        "kube-system:ebs-csi-controller-sa"
+        "kube-system:ebs-csi-controller-sa",
+        "kube-system:s3-csi-driver-sa",
       ]
     }
   }
