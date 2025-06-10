@@ -98,3 +98,9 @@ variable "on_demand_node_group_conf" {
   })
   default = {}
 }
+
+variable "additional_cluster_addons" {
+  description = "Map of additional cluster addon configurations to enable for the cluster. Addon name can be the map keys or set with `name`"
+  type        = any
+  default     = {}
+}

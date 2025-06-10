@@ -1,3 +1,24 @@
+locals {
+  cluster_addons = merge({
+    aws-ebs-csi-driver = {
+      most_recent              = true
+      service_account_role_arn = module.eks_irsa.iam_role_arn
+    }
+    eks-pod-identity-agent = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+    }
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+  }, var.additional_cluster_addons)
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20"
@@ -15,24 +36,7 @@ module "eks" {
   enable_cluster_creator_admin_permissions = var.enable_cluster_creator_admin_permissions
   access_entries                           = var.access_entries
 
-  cluster_addons = {
-    aws-ebs-csi-driver = {
-      most_recent              = true
-      service_account_role_arn = module.eks_irsa.iam_role_arn
-    }
-    eks-pod-identity-agent = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-  }
+  cluster_addons = local.cluster_addons
 
   cluster_identity_providers = var.cluster_identity_providers
 
