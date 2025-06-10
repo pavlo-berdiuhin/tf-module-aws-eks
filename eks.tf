@@ -97,8 +97,8 @@ module "eks_irsa" {
   attach_ebs_csi_policy = true
 
   attach_mountpoint_s3_csi_policy = var.aws_mountpoint_s3 != null
-  mountpoint_s3_csi_bucket_arns   = var.aws_mountpoint_s3.mountpoint_s3_csi_bucket_arns
-  mountpoint_s3_csi_path_arns     = var.aws_mountpoint_s3.mountpoint_s3_csi_path_arns
+  mountpoint_s3_csi_bucket_arns   = try(var.aws_mountpoint_s3.mountpoint_s3_csi_bucket_arns, [])
+  mountpoint_s3_csi_path_arns     = try(var.aws_mountpoint_s3.mountpoint_s3_csi_path_arns, [])
 
   oidc_providers = {
     (local.name) = {
